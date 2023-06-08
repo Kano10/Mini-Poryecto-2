@@ -118,3 +118,22 @@ Cuadrantes::Cuadrantes(Point topL, Point botR){
 	topLeft = topL;
 	botRight = botR;
 }
+
+int Cuadrantes::totalPoints(){
+
+}
+
+int Cuadrantes::totalNodes(){
+
+}
+
+int Cuadrantes::countRegion(Point p, int d){
+
+}
+
+int Cuadrantes::AggregateRegion(Point p, int d){
+
+}
+Contenedor Cuadrantes::list(){
+    
+}

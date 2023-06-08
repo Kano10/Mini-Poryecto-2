@@ -47,4 +47,10 @@ public:
 	void insert(Node* node);
 	Node* search(Point p);//busca nodo
 	bool inBoundary(Point p);//busca punto
+    int totalPoints();//retorna la cantidad de puntos que hay
+    int totalNodes();//retorna la cantidad de nodos que hay
+    int countRegion(Point p, int d);//retora la cantidad de puntos de una región, p el el centro y d como la distancia
+    int AggregateRegion(Point p, int d);//lo mismo que antes pero retorna la cantidad de población de la zona
+    Contenedor list();//retorna un contenedor con los puntos del QuadTree, nosotros vemos que contenedor se devuelve, y tambien
+    //debemos ver si se recorre inOrder, postOrder o preOrder
 };
