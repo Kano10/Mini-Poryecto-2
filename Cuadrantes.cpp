@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <vector>
 #include "Cuadrantes.h"
 
 using namespace std;
@@ -134,6 +135,6 @@ int Cuadrantes::countRegion(Point p, int d){
 int Cuadrantes::AggregateRegion(Point p, int d){
 
 }
-Contenedor Cuadrantes::list(){
-    
+vector <Point> Cuadrantes::list(){
+
 }

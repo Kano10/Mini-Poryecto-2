@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 struct Point {
 	int x;
@@ -51,6 +52,6 @@ public:
     int totalNodes();//retorna la cantidad de nodos que hay
     int countRegion(Point p, int d);//retora la cantidad de puntos de una región, p el el centro y d como la distancia
     int AggregateRegion(Point p, int d);//lo mismo que antes pero retorna la cantidad de población de la zona
-    Contenedor list();//retorna un contenedor con los puntos del QuadTree, nosotros vemos que contenedor se devuelve, y tambien
+    vector <Point> list();//retorna un contenedor con los puntos del QuadTree, nosotros vemos que contenedor se devuelve, y tambien
     //debemos ver si se recorre inOrder, postOrder o preOrder
 };
