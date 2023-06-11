@@ -127,9 +127,6 @@ int Cuadrantes::totalNodes(){
 }
 
 int Cuadrantes::countRegion(Point p, int d){
-    if(!inBoundary(p)){
-        return 0;
-	}
     
     // Si la distancia entre los límites del cuadrante es menor o igual a d,
     // todos los puntos en ese cuadrante están dentro de la región
