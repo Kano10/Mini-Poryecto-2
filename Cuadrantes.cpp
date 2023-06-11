@@ -9,19 +9,17 @@ void Cuadrantes::insert(Node* node){
 	if (node == NULL)
 		return;
 
-	// Current Cuadrante cannot contain it
+	//Si el punto que se quiere insertar no está dentro de los limites, termina el método
 	if (!inBoundary(node->pos))
 		return;
 
-	// We are at a Cuadrante of unit area
-	// We cannot subdivide this Cuadrante further
-	if (abs(topLeft.x - botRight.x) <= 1
-		&& abs(topLeft.y - botRight.y) <= 1) {
+	//En revisa si estamos en un cuadrante que ya no se puede subdividir más, si es el caso, entra al if
+	if (abs(topLeft.x - botRight.x) <= 1 && abs(topLeft.y - botRight.y) <= 1) {
 		if (n == NULL)
 			n = node;
 		return;
 	}
-
+	//En estos if, chequea por que hijo se debe ir, y llama de nuevo a la función pero en el cuadrante correspondiente.
 	if ((topLeft.x + botRight.x) / 2 >= node->pos.x) {
 		// Indicates topLeftTree
 		if ((topLeft.y + botRight.y) / 2 >= node->pos.y) {
@@ -129,7 +127,35 @@ int Cuadrantes::totalNodes(){
 }
 
 int Cuadrantes::countRegion(Point p, int d){
-
+    if(!inBoundary(p)){
+        return 0;
+	}
+    
+    // Si la distancia entre los límites del cuadrante es menor o igual a d,
+    // todos los puntos en ese cuadrante están dentro de la región
+    if(abs(topLeft.x - botRight.x) <= d && abs(topLeft.y - botRight.y) <= d){
+        // Si hay un nodo en este cuadrante, devuelve 1
+        if(n != NULL){
+            return 1;
+		}else{
+            return 0;
+		}
+	}
+    int count = 0;
+    // Recorre los cuadrantes hijo y llama a la función de forma recursiva
+    if(topLeftTree != NULL){
+        count += topLeftTree->countRegion(p, d);
+	}
+    if(topRightTree != NULL){
+        count += topRightTree->countRegion(p, d);
+	}
+    if(botLeftTree != NULL){
+        count += botLeftTree->countRegion(p, d);
+	}
+    if(botRightTree != NULL){
+        count += botRightTree->countRegion(p, d);
+	}
+    return count;
 }
 
 int Cuadrantes::AggregateRegion(Point p, int d){
