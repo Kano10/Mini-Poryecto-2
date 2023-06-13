@@ -118,14 +118,15 @@ Cuadrantes::Cuadrantes(Point topL, Point botR){
 	botRight = botR;
 }
 
-int Cuadrantes::totalPoints(){
+//int Cuadrantes::totalPoints(){
 
-}
+//}
 
-int Cuadrantes::totalNodes(){
+//int Cuadrantes::totalNodes(){
 
-}
-
+//}
+//https://github.com/jrd730/QuadTree/blob/master/QuadTree.cpp
+//linea 207
 int Cuadrantes::countRegion(Point p, int d){
     
     // Si la distancia entre los límites del cuadrante es menor o igual a d,
@@ -133,7 +134,21 @@ int Cuadrantes::countRegion(Point p, int d){
     if(abs(topLeft.x - botRight.x) <= d && abs(topLeft.y - botRight.y) <= d){
         // Si hay un nodo en este cuadrante, devuelve 1
         if(n != NULL){
-            return 1;
+        	
+        	int aux = 0;
+        	if(topLeftTree != NULL){
+        		aux++;
+        	}
+        	if(topRightTree != NULL){
+        		aux++;
+        	}
+        	if(botLeftTree != NULL){
+        		aux++;
+        	}
+        	if(botRightTree != NULL){
+        		aux++;
+        	}
+            return aux;
 		}else{
             return 0;
 		}
@@ -155,9 +170,11 @@ int Cuadrantes::countRegion(Point p, int d){
     return count;
 }
 
-int Cuadrantes::AggregateRegion(Point p, int d){
 
-}
-vector <Point> Cuadrantes::list(){
 
-}
+
+//}
+//vector <Point> Cuadrantes::list(){
+
+//}
+

@@ -24,6 +24,7 @@ int main(){
     plane2D.insert(&p6);
     plane2D.insert(&p7);
     plane2D.insert(&p8);
+    cout<<plane2D.topLeftTree->n->pos.x<<endl;
     cout << "Cantidad de puntos" << plane2D.countRegion(Point(2,2),2)<<endl;
 
     return 0;

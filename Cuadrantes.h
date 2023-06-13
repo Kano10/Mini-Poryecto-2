@@ -56,4 +56,6 @@ public:
     int AggregateRegion(Point p, int d);//lo mismo que antes pero retorna la cantidad de población de la zona
     vector <Point> list();//retorna un contenedor con los puntos del QuadTree, nosotros vemos que contenedor se devuelve, y tambien
     //debemos ver si se recorre inOrder, postOrder o preOrder
+    vector<Point> getObjectsInRegion(Point p, int d);
+    bool isInsideCircle(Point p, Point center, int radius);
 };
