@@ -136,16 +136,16 @@ int Cuadrantes::countRegion(Point p, int d){
         if(n != NULL){
         	
         	int aux = 0;
-        	if(topLeftTree != NULL){
+        	if(topLeftTree->n != NULL){
         		aux++;
         	}
-        	if(topRightTree != NULL){
+        	if(topRightTree->n != NULL){
         		aux++;
         	}
-        	if(botLeftTree != NULL){
+        	if(botLeftTree->n != NULL){
         		aux++;
         	}
-        	if(botRightTree != NULL){
+        	if(botRightTree->n != NULL){
         		aux++;
         	}
             return aux;

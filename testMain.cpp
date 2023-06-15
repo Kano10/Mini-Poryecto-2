@@ -16,7 +16,6 @@ int main(){
     Node p7(Point(6, 2), 10);
     Node p8(Point(7, 7), 8);
     
-    plane2D.insert(&p1);
     plane2D.insert(&p2);
     plane2D.insert(&p3);
     plane2D.insert(&p4);
