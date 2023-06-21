@@ -20,9 +20,9 @@ void Cuadrantes::insert(Node* node){
 		return;
 	}
 	//En estos if, chequea por que hijo se debe ir, y llama de nuevo a la función pero en el cuadrante correspondiente.
-	if ((topLeft.x + botRight.x) / 2 >= node->pos.x) {
+	if ((topLeft.x + botRight.x) / 2 > node->pos.x) {
 		// Indicates topLeftTree
-		if ((topLeft.y + botRight.y) / 2 >= node->pos.y) {
+		if ((topLeft.y + botRight.y) / 2 > node->pos.y) {
 			if (topLeftTree == NULL)
 				topLeftTree = new Cuadrantes(Point(topLeft.x, topLeft.y),Point((topLeft.x + botRight.x) / 2,(topLeft.y + botRight.y) / 2));
 			topLeftTree->insert(node);
@@ -37,7 +37,7 @@ void Cuadrantes::insert(Node* node){
 	}
 	else {
 		// Indicates topRightTree
-		if ((topLeft.y + botRight.y) / 2 >= node->pos.y) {
+		if ((topLeft.y + botRight.y) / 2 > node->pos.y) {
 			if (topRightTree == NULL)
 				topRightTree = new Cuadrantes(Point((topLeft.x + botRight.x) / 2,topLeft.y),Point(botRight.x,(topLeft.y + botRight.y) / 2));
 			topRightTree->insert(node);
@@ -62,9 +62,9 @@ Node* Cuadrantes::search(Point p){
 	if (n != NULL)
 		return n;
 
-	if ((topLeft.x + botRight.x) / 2 >= p.x) {
+	if ((topLeft.x + botRight.x) / 2 > p.x) {
 		// Indicates topLeftTree
-		if ((topLeft.y + botRight.y) / 2 >= p.y) {
+		if ((topLeft.y + botRight.y) / 2 > p.y) {
 			if (topLeftTree == NULL)
 				return NULL;
 			return topLeftTree->search(p);
@@ -79,7 +79,7 @@ Node* Cuadrantes::search(Point p){
 	}
 	else {
 		// Indicates topRightTree
-		if ((topLeft.y + botRight.y) / 2 >= p.y) {
+		if ((topLeft.y + botRight.y) / 2 > p.y) {
 			if (topRightTree == NULL)
 				return NULL;
 			return topRightTree->search(p);
@@ -128,46 +128,62 @@ Cuadrantes::Cuadrantes(Point topL, Point botR){
 //https://github.com/jrd730/QuadTree/blob/master/QuadTree.cpp
 //linea 207
 int Cuadrantes::countRegion(Point p, int d){
-    
+    int count = 0;
     // Si la distancia entre los límites del cuadrante es menor o igual a d,
     // todos los puntos en ese cuadrante están dentro de la región
-    if(abs(topLeft.x - botRight.x) <= d && abs(topLeft.y - botRight.y) <= d){
+    if(abs(topLeft.x-botRight.x <=1) && abs(topLeft.y-botRight.y <=1)) {
         // Si hay un nodo en este cuadrante, devuelve 1
-        if(n != NULL){
-        	
-        	int aux = 0;
-        	if(topLeftTree->n != NULL){
-        		aux++;
-        	}
-        	if(topRightTree->n != NULL){
-        		aux++;
-        	}
-        	if(botLeftTree->n != NULL){
-        		aux++;
-        	}
-        	if(botRightTree->n != NULL){
-        		aux++;
-        	}
-            return aux;
+		if(n != NULL){
+			return 1;
+		}
+	if(n == NULL){
+		if ((topLeft.x <= abs(p.x-d) && botRight.x >= p.x + d ) {
+		// Indicates topLeftTree
+			if ((topLeft.y <= abs(p.y - d) && botRight.y >= p.y +d)) {
+				if (topLeftTree != NULL)
+					count+=topLeftTree->countRegion(p,d);
+			
+		// Indicates botLeftTree
+			}else{
+				if (botLeftTree != NULL´{})
+					return NULL;
+					return botLeftTree->search(p);
+			}
 		}else{
-            return 0;
+		// Indicates topRightTree
+			if ((topLeft.y + botRight.y) / 2 > p.y) {
+				if (topRightTree == NULL)
+					return NULL;
+				return topRightTree->search(p);
+			
+		// Indicates botRightTree
+			}else {
+				if (botRightTree == NULL)
+					return NULL;
+				return botRightTree->search(p);
+			}
 		}
 	}
-    int count = 0;
-    // Recorre los cuadrantes hijo y llama a la función de forma recursiva
-    if(topLeftTree != NULL){
-        count += topLeftTree->countRegion(p, d);
-	}
-    if(topRightTree != NULL){
-        count += topRightTree->countRegion(p, d);
-	}
-    if(botLeftTree != NULL){
-        count += botLeftTree->countRegion(p, d);
-	}
-    if(botRightTree != NULL){
-        count += botRightTree->countRegion(p, d);
-	}
     return count;
+}
+
+void Cuadrantes::_printQuadTree(Cuadrantes* t, int indent)
+{
+  for(int i=0; i < indent; i++)
+    cout << "--";
+
+  if(t != NULL && t->n != NULL)
+    cout << " " << t->n->data << endl;
+  else if(t == NULL)
+    cout << " NULL" << endl;
+  else {
+    cout << " X " << endl;
+  
+    _printQuadTree(t->topLeftTree, indent+1);
+    _printQuadTree(t->topRightTree, indent+1);
+    _printQuadTree(t->botLeftTree, indent+1);
+    _printQuadTree(t->botRightTree, indent+1);
+  }
 }
 
 
