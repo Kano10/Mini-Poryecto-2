@@ -128,43 +128,51 @@ Cuadrantes::Cuadrantes(Point topL, Point botR){
 //https://github.com/jrd730/QuadTree/blob/master/QuadTree.cpp
 //linea 207
 int Cuadrantes::countRegion(Point p, int d){
-    int count = 0;
-    // Si la distancia entre los límites del cuadrante es menor o igual a d,
-    // todos los puntos en ese cuadrante están dentro de la región
-    if(abs(topLeft.x-botRight.x <=1) && abs(topLeft.y-botRight.y <=1)) {
-        // Si hay un nodo en este cuadrante, devuelve 1
-		if(n != NULL){
+	int cont = 0;
+
+	if(n != NULL){
+		if((n->pos.x >= abs(p.x - d)) && (n->pos.x <= p.x + d) && (n->pos.y >= abs(p.y - d)) && (n->pos.y <= p.y + d)){
 			return 1;
 		}
-	if(n == NULL){
-		if ((topLeft.x <= abs(p.x-d) && botRight.x >= p.x + d ) {
-		// Indicates topLeftTree
-			if ((topLeft.y <= abs(p.y - d) && botRight.y >= p.y +d)) {
-				if (topLeftTree != NULL)
-					count+=topLeftTree->countRegion(p,d);
-			
-		// Indicates botLeftTree
-			}else{
-				if (botLeftTree != NULL´{})
-					return NULL;
-					return botLeftTree->search(p);
-			}
-		}else{
-		// Indicates topRightTree
-			if ((topLeft.y + botRight.y) / 2 > p.y) {
-				if (topRightTree == NULL)
-					return NULL;
-				return topRightTree->search(p);
-			
-		// Indicates botRightTree
-			}else {
-				if (botRightTree == NULL)
-					return NULL;
-				return botRightTree->search(p);
-			}
+	}
+	
+	if(topLeftTree != NULL){
+		cont += topLeftTree->countRegion(p,d);
+	}
+	if(topRightTree != NULL){
+		cont += topRightTree->countRegion(p,d);
+	}
+	if(botLeftTree != NULL){
+		cont += botLeftTree->countRegion(p,d);
+	}
+	if(botRightTree != NULL){
+		cont += botRightTree->countRegion(p,d);
+	}
+	return cont;
+}
+
+int Cuadrantes::AggregateRegion(Point p, int d){
+	int cont = 0;
+
+	if(n != NULL){
+		if((n->pos.x >= abs(p.x - d)) && (n->pos.x <= p.x + d) && (n->pos.y >= abs(p.y - d)) && (n->pos.y <= p.y + d)){
+			return n->data;
 		}
 	}
-    return count;
+	
+	if(topLeftTree != NULL){
+		cont += topLeftTree->countRegion(p,d);
+	}
+	if(topRightTree != NULL){
+		cont += topRightTree->countRegion(p,d);
+	}
+	if(botLeftTree != NULL){
+		cont += botLeftTree->countRegion(p,d);
+	}
+	if(botRightTree != NULL){
+		cont += botRightTree->countRegion(p,d);
+	}
+	return cont;
 }
 
 void Cuadrantes::_printQuadTree(Cuadrantes* t, int indent)
