@@ -29,6 +29,10 @@ int main(){
     cout<<plane2D.topLeftTree->topLeftTree->topRightTree->n->pos.y<<endl;
     //plane2D._printQuadTree(&plane2D,0);
     cout << "Cantidad de puntos" << plane2D.countRegion(Point(2,2),2)<<endl;
+    int totalPoints = plane2D.totalPoints();
+    cout << "Total Points: " << totalPoints << endl;
+    int totalNodes = plane2D.totalNodes();
+    cout << "Total Nodes: " << totalNodes << endl;
 
     return 0;
 }

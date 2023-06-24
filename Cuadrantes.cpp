@@ -118,13 +118,42 @@ Cuadrantes::Cuadrantes(Point topL, Point botR){
 	botRight = botR;
 }
 
-//int Cuadrantes::totalPoints(){
+int Cuadrantes::totalPoints() {
+    if (n != nullptr) {
+        // Si el nodo actual contiene un punto, se cuenta como 1
+        return 1;
+    } else {
+        // Si el nodo actual no contiene un punto, se suma la cantidad de puntos en los nodos hijos recursivamente
+        int totalCount = 0;
+        if (topLeftTree != nullptr)
+            totalCount += topLeftTree->totalPoints();
+        if (topRightTree != nullptr)
+            totalCount += topRightTree->totalPoints();
+        if (botLeftTree != nullptr)
+            totalCount += botLeftTree->totalPoints();
+        if (botRightTree != nullptr)
+            totalCount += botRightTree->totalPoints();
 
-//}
+        return totalCount;
+    }
+}
 
-//int Cuadrantes::totalNodes(){
+int Cuadrantes::totalNodes() {
+    int count = 1;  // Contador para el nodo actual
 
-//}
+    // Sumar la cantidad de nodos en los nodos hijos recursivamente
+    if (topLeftTree != nullptr)
+        count += topLeftTree->totalNodes();
+    if (topRightTree != nullptr)
+        count += topRightTree->totalNodes();
+    if (botLeftTree != nullptr)
+        count += botLeftTree->totalNodes();
+    if (botRightTree != nullptr)
+        count += botRightTree->totalNodes();
+
+    return count;
+}
+
 //https://github.com/jrd730/QuadTree/blob/master/QuadTree.cpp
 //linea 207
 int Cuadrantes::countRegion(Point p, int d){
@@ -154,23 +183,23 @@ int Cuadrantes::countRegion(Point p, int d){
 int Cuadrantes::AggregateRegion(Point p, int d){
 	int cont = 0;
 
-	if(n != NULL){
-		if((n->pos.x >= abs(p.x - d)) && (n->pos.x <= p.x + d) && (n->pos.y >= abs(p.y - d)) && (n->pos.y <= p.y + d)){
-			return n->data;
-		}
+	if (n != nullptr) {
+    	if ((abs(n->pos.x - p.x) <= d) && (abs(n->pos.y - p.y) <= d)) {
+        	return n->data;
+    	}
 	}
 	
 	if(topLeftTree != NULL){
-		cont += topLeftTree->countRegion(p,d);
+		cont += topLeftTree->AggregateRegion(p,d);
 	}
 	if(topRightTree != NULL){
-		cont += topRightTree->countRegion(p,d);
+		cont += topRightTree->AggregateRegion(p,d);
 	}
 	if(botLeftTree != NULL){
-		cont += botLeftTree->countRegion(p,d);
+		cont += botLeftTree->AggregateRegion(p,d);
 	}
 	if(botRightTree != NULL){
-		cont += botRightTree->countRegion(p,d);
+		cont += botRightTree->AggregateRegion(p,d);
 	}
 	return cont;
 }
