@@ -2,37 +2,87 @@
 #include <iostream>
 #include <vector>
 #include "Cuadrantes.h"
+#include <fstream>
+#include <sstream>
+#include <chrono> // Para medir el tiempo de ejecución
+#include <iomanip> // Para imprimir los tiempos con decimales
 
 using namespace std;
+using namespace std::chrono;
 
-int main(){
-    Cuadrantes plane2D(Point(0, 0), Point(8, 8));
-    Node p1(Point(0, 0), 5);
-    Node p2(Point(0, 1), 4);
-    Node p3(Point(1, 0), 2);
-    Node p4(Point(1, 1), 2);
-    Node p5(Point(2, 1), 1);
-    Node p6(Point(5, 1), 3);
-    Node p7(Point(6, 2), 10);
-    Node p8(Point(7, 7), 8);
-    plane2D.insert(&p1);
-    plane2D.insert(&p2);
-    plane2D.insert(&p3);
-    plane2D.insert(&p4);
-    plane2D.insert(&p5);
-    plane2D.insert(&p6);
-    plane2D.insert(&p7);
-    plane2D.insert(&p8);
-    cout<<plane2D.topLeftTree->topLeftTree->topLeftTree->topLeft.x<<","<<plane2D.topLeftTree->topLeftTree->topLeftTree->topLeft.y<<" "<<
-    plane2D.topLeftTree->topLeftTree->topLeftTree->botRight.x<<","<<plane2D.topLeftTree->topLeftTree->topLeftTree->botRight.y<<endl;
-    cout<<plane2D.topLeftTree->topLeftTree->topRightTree->n->pos.x<<endl;
-    cout<<plane2D.topLeftTree->topLeftTree->topRightTree->n->pos.y<<endl;
-    //plane2D._printQuadTree(&plane2D,0);
-    cout << "Cantidad de puntos" << plane2D.countRegion(Point(2,2),2)<<endl;
-    int totalPoints = plane2D.totalPoints();
-    cout << "Total Points: " << totalPoints << endl;
-    int totalNodes = plane2D.totalNodes();
-    cout << "Total Nodes: " << totalNodes << endl;
-
+int main() {
+    const int numIterations = 20;
+    double totalTime = 0.0;
+    
+    for (int iteration = 0; iteration < numIterations; iteration++) {
+        // Reiniciar el QuadTree para cada iteración
+        Cuadrantes quadTree;
+        
+        // Leer el dataset desde un archivo
+        ifstream inputFile("worldcitiespop_fixed.txt");
+        if (!inputFile) {
+            cout << "Error al abrir el archivo." << endl;
+            return 1;
+        }
+        
+        string line;
+        int lineCount = 0;
+        const int maxLines = 100;
+        while (getline(inputFile, line) && lineCount < maxLines) {
+            // Separar los valores de cada línea por punto y coma
+            istringstream iss(line);
+            string country, city, accentCity, region, populationStr, latitudeStr, longitudeStr, geopointStr;
+            getline(iss, country, ';');
+            getline(iss, city, ';');
+            getline(iss, accentCity, ';');
+            getline(iss, region, ';');
+            getline(iss, populationStr, ';');
+            getline(iss, latitudeStr, ';');
+            getline(iss, longitudeStr, ';');
+            getline(iss, geopointStr, ';');
+            
+            // Convertir las cadenas a los tipos de datos apropiados
+            int population = stoi(populationStr);
+            float latitude = stof(latitudeStr);
+            float longitude = stof(longitudeStr);
+            
+            // Redondear las coordenadas a 3 decimales
+            latitude = round(latitude * 1000) / 1000.0f;
+            longitude = round(longitude * 1000) / 1000.0f;
+            
+            // Crear un nuevo nodo y medir el tiempo de ejecución de la inserción en el QuadTree
+            Point point(latitude, longitude);
+            Node* newNode = new Node(point, population);
+            
+            // Medir el tiempo de ejecución del método insert
+            double duracion = 0.0;
+            auto start = high_resolution_clock::now();
+            
+            quadTree.insert(newNode);
+            
+            auto end = high_resolution_clock::now();
+            
+            // Calcular el tiempo transcurrido en milisegundos
+            duration<double> diff = end - start;
+            duracion = diff.count();
+            totalTime += duracion;
+            
+            lineCount++;
+        }
+        
+        inputFile.close();
+        
+        // Realizar otras operaciones con el QuadTree si es necesario
+        
+        cout << "Tiempo de ejecución de la iteración " << iteration + 1 << ": " << fixed << setprecision(20) << totalTime << " ms" << endl;
+        
+        // Reiniciar el tiempo para la siguiente iteración
+        totalTime = 0.0;
+    }
+    
+    // Calcular el tiempo promedio
+    double averageTime = totalTime / numIterations;
+    cout << "Tiempo promedio de ejecución: " << fixed << setprecision(8) << averageTime << " ms" << endl;
+    
     return 0;
 }

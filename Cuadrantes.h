@@ -4,9 +4,9 @@
 using namespace std;
 
 struct Point {
-	int x;
-	int y;
-    Point(int _x, int _y)
+	float x;
+	float y;
+    Point(float _x, float _y)
     {
         x = _x;
         y = _y;

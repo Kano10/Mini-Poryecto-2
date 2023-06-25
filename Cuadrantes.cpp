@@ -14,7 +14,7 @@ void Cuadrantes::insert(Node* node){
 		return;
 
 	//En revisa si estamos en un cuadrante que ya no se puede subdividir más, si es el caso, entra al if
-	if (abs(topLeft.x - botRight.x) <= 1 && abs(topLeft.y - botRight.y) <= 1) {
+	if (abs(topLeft.x - botRight.x) <= 0.001 && abs(topLeft.y - botRight.y) <= 0.001) {
 		if (n == NULL)
 			n = node;
 		return;
@@ -94,8 +94,8 @@ Node* Cuadrantes::search(Point p){
 	}
 }
 bool Cuadrantes::inBoundary(Point p){
-	return (p.x >= topLeft.x && p.x <= botRight.x
-			&& p.y >= topLeft.y && p.y <= botRight.y);
+	return (p.x >= 0 && p.x <= 180 && p.y >= 0 && p.y <= 360);
+
 }
 
 Cuadrantes::Cuadrantes(){
