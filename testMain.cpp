@@ -24,7 +24,7 @@ int main() {
 
     for (int iteration = 0; iteration < numIterations; iteration++) {
         // Reiniciar el QuadTree para cada iteración
-        Cuadrantes* quadTree = new Cuadrantes(Point(0,0), Point(360,180));
+        Cuadrantes* quadTree = new Cuadrantes(Point(0.0,0.0), Point(360.0,180.0));
         
         // Leer el dataset desde un archivo
         ifstream inputFile("worldcitiespop_fixed.txt");
@@ -53,8 +53,8 @@ int main() {
             ajustarCoordenadas(latitude,longitude);
             
             // Redondear las coordenadas a 3 decimales
-            latitude = round(latitude * 1000) / 1000.0f;
-            longitude = round(longitude * 1000) / 1000.0f;
+            latitude = round(latitude * 100000) / 100000.0f;
+            longitude = round(longitude * 100000) / 100000.0f;
             
             // Crear un nuevo nodo y medir el tiempo de ejecución de la inserción en el QuadTree
             Point point(latitude, longitude);
@@ -120,8 +120,8 @@ int main() {
         ajustarCoordenadas(latitude,longitude);
             
         // Redondear las coordenadas a 3 decimales
-        latitude = round(latitude * 1000) / 1000.0f;
-        longitude = round(longitude * 1000) / 1000.0f;
+        latitude = round(latitude * 100000) / 100000.0f;
+        longitude = round(longitude * 100000) / 100000.0f;
             
         // Crear un nuevo nodo y medir el tiempo de ejecución de la inserción en el QuadTree
         Point point(latitude, longitude);
@@ -353,5 +353,8 @@ int main() {
     averageTime2 = averageTime2/numIterations;
     archivo11 << fixed << setprecision(8) << averageTime2 << '\n';
 
+
+    int b = quadTree->totalPoints();
+    cout<<b<<endl;
     return 0;
 }
