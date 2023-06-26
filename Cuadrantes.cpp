@@ -14,7 +14,7 @@ void Cuadrantes::insert(Node* node){
 		return;
 
 	//En revisa si estamos en un cuadrante que ya no se puede subdividir más, si es el caso, entra al if
-	if (abs(topLeft.x - botRight.x) <= 0.000001 && abs(topLeft.y - botRight.y) <= 0.000001) {
+	if (abs(topLeft.x - botRight.x) <= 0.0000001 && abs(topLeft.y - botRight.y) <= 0.0000001) {
 		if (n == NULL)
 			n = node;
 		return;

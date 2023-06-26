@@ -10,9 +10,11 @@
 using namespace std;
 using namespace std::chrono;
 
-void ajustarCoordenadas(float& latitud, float& longitud){
-    latitud = latitud + 90;
-    longitud = longitud + 180;
+double ajustarCoordenadasLatitud(double latitud){
+    return latitud = latitud + 90;
+}
+double ajustarCoordenadasLongitud(double longitude){
+    return longitude= longitude +180;
 }
 
 int main() {
@@ -20,7 +22,7 @@ int main() {
     double totalTime = 0.0;
     double averageTime = 0.0;
     
-    ofstream archivo("resultados3MInsert.txt");
+    ofstream archivo("resultadosInsert.txt");
 
     for (int iteration = 0; iteration < numIterations; iteration++) {
         // Reiniciar el QuadTree para cada iteración
@@ -31,31 +33,32 @@ int main() {
         
         string line;
         int lineCount = 0;
-        const int maxLines = 3000000;
+        const int maxLines = 100000;
         while (getline(inputFile, line) && lineCount < maxLines) {
             // Separar los valores de cada línea por punto y coma
             istringstream iss(line);
-            string country, city, accentCity, region, populationStr, latitudeStr, longitudeStr, geopointStr;
+            string country, city, accentCity, region, populationStr, latitudeStr1, longitudeStr1, latitudeStr2, longitudeStr2;
             getline(iss, country, ';');
             getline(iss, city, ';');
             getline(iss, accentCity, ';');
             getline(iss, region, ';');
             getline(iss, populationStr, ';');
-            getline(iss, latitudeStr, ';');
-            getline(iss, longitudeStr, ';');
-            getline(iss, geopointStr, ';');
+            getline(iss, latitudeStr1, ';');
+            getline(iss, longitudeStr1, ';');
+            getline(iss, latitudeStr2, ',');
+            getline(iss, longitudeStr2,'\n');
             
             // Convertir las cadenas a los tipos de datos apropiados
             int population = stoi(populationStr);
-            float latitude = stof(latitudeStr);
-            float longitude = stof(longitudeStr);
+            float latitude = stof(latitudeStr2);
+            float longitude = stof(longitudeStr2);
 
-            ajustarCoordenadas(latitude,longitude);
             
-            // Redondear las coordenadas a 3 decimales
-            latitude = round(latitude * 100000) / 100000.0f;
-            longitude = round(longitude * 100000) / 100000.0f;
+
             
+            latitude = ajustarCoordenadasLatitud(latitude);
+            longitude = ajustarCoordenadasLongitud(longitude);
+
             // Crear un nuevo nodo y medir el tiempo de ejecución de la inserción en el QuadTree
             Point point(latitude, longitude);
             Node* newNode = new Node(point, population);
@@ -98,31 +101,30 @@ int main() {
         
     string line;
     int lineCount = 0;
-    const int maxLines = 3000000;
+    const int maxLines = 100000;
     while (getline(inputFile, line) && lineCount < maxLines) {
         // Separar los valores de cada línea por punto y coma
         istringstream iss(line);
-        string country, city, accentCity, region, populationStr, latitudeStr, longitudeStr, geopointStr;
+        string country, city, accentCity, region, populationStr, latitudeStr1, longitudeStr1, latitudeStr2, longitudeStr2;
         getline(iss, country, ';');
         getline(iss, city, ';');
         getline(iss, accentCity, ';');
         getline(iss, region, ';');
         getline(iss, populationStr, ';');
-        getline(iss, latitudeStr, ';');
-        getline(iss, longitudeStr, ';');
-        getline(iss, geopointStr, ';');
+        getline(iss, latitudeStr1, ';');
+        getline(iss, longitudeStr1, ';');
+        getline(iss, latitudeStr2, ',');
+        getline(iss, longitudeStr2, '\n');
             
         // Convertir las cadenas a los tipos de datos apropiados
         int population = stoi(populationStr);
-        float latitude = stof(latitudeStr);
-        float longitude = stof(longitudeStr);
+        float latitude = stof(latitudeStr2);
+        float longitude = stof(longitudeStr2);
 
-        ajustarCoordenadas(latitude,longitude);
             
-        // Redondear las coordenadas a 3 decimales
-        latitude = round(latitude * 100000) / 100000.0f;
-        longitude = round(longitude * 100000) / 100000.0f;
-            
+        latitude = ajustarCoordenadasLatitud(latitude);
+        longitude = ajustarCoordenadasLongitud(longitude);
+
         // Crear un nuevo nodo y medir el tiempo de ejecución de la inserción en el QuadTree
         Point point(latitude, longitude);
         Node* newNode = new Node(point, population);
@@ -137,7 +139,7 @@ int main() {
     double averageTime2 = 0.0;
     double duracion2 = 0.0;
     
-    ofstream archivo2("resultados3MCount2x2.txt");
+    ofstream archivo2("resultadosCount2x2.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -158,7 +160,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo3("resultados3MAggregate2x2.txt");
+    ofstream archivo3("resultadosAggregate2x2.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -182,7 +184,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo4("resultados3MCount30x30.txt");
+    ofstream archivo4("resultadosCount30x30.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -203,7 +205,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo5("resultados3MAggregate30x30.txt");
+    ofstream archivo5("resultadosAggregate30x30.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -226,7 +228,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo6("resultados3MCount100x100.txt");
+    ofstream archivo6("resultadosCount100x100.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -247,7 +249,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo7("resultados3MAggregate100x100.txt");
+    ofstream archivo7("resultadosAggregate100x100.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -270,7 +272,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo8("resultados3MCount200x180.txt");
+    ofstream archivo8("resultadosCount200x180.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -291,7 +293,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo9("resultados3MAggregate200x180.txt");
+    ofstream archivo9("resultadosAggregate200x180.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -314,7 +316,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo10("resultados3MCountCompleta.txt");
+    ofstream archivo10("resultadosCountCompleta.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -335,7 +337,7 @@ int main() {
     averageTime2 = 0.0;
     duracion2 = 0.0;
     
-    ofstream archivo11("resultados3MAggregateCompleta.txt");
+    ofstream archivo11("resultadosAggregateCompleta.txt");
     for (int i = 0; i < numIterations; ++i)
         {
              
@@ -353,8 +355,5 @@ int main() {
     averageTime2 = averageTime2/numIterations;
     archivo11 << fixed << setprecision(8) << averageTime2 << '\n';
 
-
-    int b = quadTree->totalPoints();
-    cout<<b<<endl;
     return 0;
 }
