@@ -117,6 +117,24 @@ Cuadrantes::Cuadrantes(Point topL, Point botR){
 	topLeft = topL;
 	botRight = botR;
 }
+Cuadrantes::~Cuadrantes() {
+    // Eliminar los hijos recursivamente
+    if (topLeftTree != nullptr) {
+        delete topLeftTree;
+    }
+    if (topRightTree != nullptr) {
+        delete topRightTree;
+    }
+    if (botLeftTree != nullptr) {
+        delete botLeftTree;
+    }
+    if (botRightTree != nullptr) {
+        delete botRightTree;
+    }
+
+    // Eliminar el nodo actual
+    delete n;
+}
 
 int Cuadrantes::totalPoints() {
     if (n != nullptr) {

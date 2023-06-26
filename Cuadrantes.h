@@ -47,6 +47,7 @@ public:
 
     Cuadrantes();
     Cuadrantes(Point topL, Point botR);
+    ~Cuadrantes();
 	void insert(Node* node);
 	Node* search(Point p);//busca nodo
 	bool inBoundary(Point p);//busca punto
