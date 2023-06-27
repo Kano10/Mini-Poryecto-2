@@ -241,11 +241,31 @@ void Cuadrantes::_printQuadTree(Cuadrantes* t, int indent)
   }
 }
 
+vector<Point> Cuadrantes::list() {
+    vector<Point> points;
 
+    if (n != NULL) {
+        points.push_back(n->pos);
+    } else {
+        if (topLeftTree != NULL) {
+            vector<Point> topLeftPoints = topLeftTree->list();
+            points.insert(points.end(), topLeftPoints.begin(), topLeftPoints.end());
+        }
+        if (topRightTree != NULL) {
+            vector<Point> topRightPoints = topRightTree->list();
+            points.insert(points.end(), topRightPoints.begin(), topRightPoints.end());
+        }
+        if (botLeftTree != NULL) {
+            vector<Point> botLeftPoints = botLeftTree->list();
+            points.insert(points.end(), botLeftPoints.begin(), botLeftPoints.end());
+        }
+        if (botRightTree != NULL) {
+            vector<Point> botRightPoints = botRightTree->list();
+            points.insert(points.end(), botRightPoints.begin(), botRightPoints.end());
+        }
+    }
 
+    return points;
+}
 
-//}
-//vector <Point> Cuadrantes::list(){
-
-//}
 
